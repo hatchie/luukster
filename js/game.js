@@ -8,25 +8,9 @@ let falling = [];
 let interval = null;
 let answered = false;
 let currentCorrect = 0;
-let questionPool = [];
 
 export function loadQuestions(data) {
-  if (!Array.isArray(data)) {
-    console.error("Quiz data is not an array", data);
-    return;
-  }
-
-  const seen = new Set();
-
-  questions = data.filter(q => {
-    const key = q.question.trim().toLowerCase();
-
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-
-  console.log(`Loaded ${questions.length} unique questions`);
+  questions = data;
 }
 
 export function startGame(count) {
@@ -35,25 +19,14 @@ export function startGame(count) {
     return;
   }
 
-  total = Math.min(count, questions.length);
+  total = count;
   current = 0;
   score = 0;
 
-  // Create a shuffled pool (no repeats)
-  questionPool = shuffle([...questions]);
-  
   hide("menu");
   show("game");
 
   nextQuestion();
-}
-
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
 }
 
 export function handleKeyboardAnswer(index) {
@@ -73,7 +46,7 @@ function nextQuestion() {
     return;
   }
 
-  const q = questionPool[current];
+  const q = questions[Math.floor(Math.random() * questions.length)];
   currentCorrect = q.correctIndex;
 
   setText("question", q.question);
@@ -124,7 +97,3 @@ function endGame() {
   show("result");
   setText("finalScore", `You scored ${score} out of ${total}`);
 }
-
-
-
-

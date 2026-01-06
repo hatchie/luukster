@@ -1,17 +1,18 @@
 [
   {
     "id": "Greetings",
-    "title": "🧮 Greetings Quiz",
+    "title": "👋 Greetings Quiz",
     "file": "1_greetings.json"
   },
   {
     "id": "Expressions",
-    "title": "🔬 Expressions Quiz",
+    "title": "🫩 Expressions Quiz",
     "file": "2_expressions.json"
   },
   {
     "id": "Questions",
-    "title": "🌍 Questions Quiz",
+    "title": "❓ Questions Quiz",
     "file": "3_questions.json"
   }
 ]
+

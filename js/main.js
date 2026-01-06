@@ -19,12 +19,16 @@ fetch("./data/quizzes.json")
 
         const res = await fetch(`./data/${q.file}`);
         const data = await res.json();
-        loadQuestions(data);
 
-        document.querySelectorAll("#quizList button")
-          .forEach(b => b.style.opacity = 0.5);
+       // ✅ ensure questions are properly loaded & cleaned
+       loadQuestions(data);
 
-        btn.style.opacity = 1;
+       console.log("Quiz loaded:", q.title);
+
+       document.querySelectorAll("#quizList button")
+      .forEach(b => b.style.opacity = 0.5);
+
+       btn.style.opacity = 1;
       };
 
       list.appendChild(btn);
@@ -40,3 +44,4 @@ document.getElementById("btn10").onclick = () => {
 };
 
 setupKeyboard(handleKeyboardAnswer);
+

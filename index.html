@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Falling Quiz</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="menu">
+  <h1>🧠 Falling Quiz</h1>
+  <button id="btn5">5 Questions</button>
+  <button id="btn10">10 Questions</button>
+</div>
+
+<div id="game" hidden>
+  <div id="question"></div>
+  <p style="font-size:14px;opacity:0.8">
+    Click / Tap or press A–D or 1–4
+  </p>
+  <div id="gameArea">
+    <div id="floor"></div>
+  </div>
+  <div id="score"></div>
+</div>
+
+<div id="result" hidden>
+  <h2>Game Over</h2>
+  <p id="finalScore"></p>
+  <button onclick="location.reload()">Play Again</button>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -12,20 +12,21 @@ let questionPool = [];
 
 export function loadQuestions(data) {
   const seen = new Set();
+  const unique = [];
 
-  questions = data.questions.filter(q => {
+  data.questions.forEach(q => {
     const key = q.question.trim().toLowerCase();
-
-    if (seen.has(key)) {
-      return false; // duplicate → remove
+    if (!seen.has(key)) {
+      seen.add(key);
+      unique.push(q);
     }
-
-    seen.add(key);
-    return true;
   });
+
+  questions = unique.map(q => buildQuestion(q, data.wrongAnswers));
 
   console.log(`Loaded ${questions.length} unique questions`);
 }
+
 
 
 export function startGame(count) {
@@ -53,6 +54,23 @@ function shuffle(array) {
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
+}
+
+function buildQuestion(raw, wrongPool) {
+  const wrongs = shuffle(
+    wrongPool.filter(a => a !== raw.correct)
+  ).slice(0, 3);
+
+  const answers = shuffle([
+    raw.correct,
+    ...wrongs
+  ]);
+
+  return {
+    question: raw.question,
+    answers,
+    correctIndex: answers.indexOf(raw.correct)
+  };
 }
 
 export function handleKeyboardAnswer(index) {
@@ -123,4 +141,5 @@ function endGame() {
   show("result");
   setText("finalScore", `You scored ${score} out of ${total}`);
 }
+
 

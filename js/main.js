@@ -19,9 +19,7 @@ fetch("./data/quizzes.json")
 
         const res = await fetch(`./data/${q.file}`);
         const data = await res.json();
-
         loadQuestions(data);
-        console.log("Quiz loaded:", q.title);
 
         document.querySelectorAll("#quizList button")
           .forEach(b => b.style.opacity = 0.5);
@@ -34,19 +32,11 @@ fetch("./data/quizzes.json")
   });
 
 document.getElementById("btn5").onclick = () => {
-  if (!selectedQuizFile) {
-    alert("Please select a quiz first");
-    return;
-  }
-  startGame(5);
+  if (selectedQuizFile) startGame(5);
 };
 
 document.getElementById("btn10").onclick = () => {
-  if (!selectedQuizFile) {
-    alert("Please select a quiz first");
-    return;
-  }
-  startGame(10);
+  if (selectedQuizFile) startGame(10);
 };
 
 setupKeyboard(handleKeyboardAnswer);

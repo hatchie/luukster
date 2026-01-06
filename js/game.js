@@ -8,10 +8,25 @@ let falling = [];
 let interval = null;
 let answered = false;
 let currentCorrect = 0;
+let questionPool = [];
 
 export function loadQuestions(data) {
-  questions = data;
+  const seen = new Set();
+
+  questions = data.questions.filter(q => {
+    const key = q.question.trim().toLowerCase();
+
+    if (seen.has(key)) {
+      return false; // duplicate → remove
+    }
+
+    seen.add(key);
+    return true;
+  });
+
+  console.log(`Loaded ${questions.length} unique questions`);
 }
+
 
 export function startGame(count) {
   if (!questions.length) {
@@ -19,14 +34,25 @@ export function startGame(count) {
     return;
   }
 
-  total = count;
+  total = Math.min(count, questions.length);
   current = 0;
   score = 0;
 
+  // Create a shuffled pool (no repeats)
+  questionPool = shuffle([...questions]);
+  
   hide("menu");
   show("game");
 
   nextQuestion();
+}
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }
 
 export function handleKeyboardAnswer(index) {
@@ -46,7 +72,7 @@ function nextQuestion() {
     return;
   }
 
-  const q = questions[Math.floor(Math.random() * questions.length)];
+  const q = questionPool[current];
   currentCorrect = q.correctIndex;
 
   setText("question", q.question);
@@ -97,3 +123,4 @@ function endGame() {
   show("result");
   setText("finalScore", `You scored ${score} out of ${total}`);
 }
+

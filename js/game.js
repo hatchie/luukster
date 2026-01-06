@@ -14,6 +14,11 @@ export function loadQuestions(data) {
 }
 
 export function startGame(count) {
+  if (!questions.length) {
+    alert("Please select a quiz first!");
+    return;
+  }
+
   total = count;
   current = 0;
   score = 0;
@@ -51,7 +56,7 @@ function nextQuestion() {
     falling.push(createAnswer(text, i, handleAnswer));
   });
 
-  const speed = 0.35 + current * 0.02;
+  const speed = 0.6 + current * 0.05;
 
   interval = setInterval(() => {
     falling.forEach(a => {
@@ -65,7 +70,7 @@ function nextQuestion() {
         }, 700);
       }
     });
-  }, 20);
+  }, 16);
 }
 
 function handleAnswer(index, element) {
@@ -92,4 +97,3 @@ function endGame() {
   show("result");
   setText("finalScore", `You scored ${score} out of ${total}`);
 }
-

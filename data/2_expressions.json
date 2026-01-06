@@ -1,27 +1,53 @@
 [
   {
-    "question": "What is 7 × 8?",
-    "answers": ["54", "56", "64", "48"],
+    "question": "S’il vous plaît (seel voo play)",
+    "answers": ["Thank you", "Please (formal)", "You’re welcome (casual)", "Excuse me (to get attention)"],
     "correctIndex": 1
   },
   {
-    "question": "Which planet is known as the Red Planet?",
-    "answers": ["Earth", "Mars", "Venus", "Jupiter"],
+    "question": "De rien (duh ree-ahn)",
+    "answers": ["Don’t mention it/It’s nothing", "You’re welcome (casual)", "Gladly/Willingly", "Bless you! (informal)"],
     "correctIndex": 1
   },
   {
-    "question": "What does HTML stand for?",
-    "answers": [
-      "Hyper Text Markup Language",
-      "High Tech Modern Language",
-      "Hyper Tool Multi Language",
-      "Home Tool Markup Language"
-    ],
+    "question": "Avec plaisir (ah-vek play-zeer)",
+    "answers": ["Thank you", "Please (formal)", "With pleasure", "Cheers!"],
+    "correctIndex": 2
+  },
+  {
+    "question": "Bon appétit! (bun ah-pay-tee)",
+    "answers": ["Enjoy your meal!", "Please (formal)", "You’re welcome (casual)", "Excuse me (to get attention)"],
     "correctIndex": 0
   },
   {
-    "question": "What is the square root of 81?",
-    "answers": ["7", "8", "9", "10"],
+    "question": "À vos souhaits! (ah voh sway)",
+    "answers": ["Don’t mention it/It’s nothing", "You’re welcome (casual)", "Gladly/Willingly", "Bless you! (after a sneeze, formal)"],
+    "correctIndex": 3
+  },
+  {
+    "question": "Merci beaucoup (mehr-see boh-koo)",
+    "answers": ["Thank you", "Please (formal)", "Thank you very much", "Cheers!"],
+    "correctIndex": 2
+  },
+  {
+    "question": "Santé! (sahn-tay)",
+    "answers": ["Don’t mention it/It’s nothing", "You’re welcome (casual)", "Gladly/Willingly", "Cheers! (to your health)"],
+    "correctIndex": 3
+  },
+  {
+    "question": "Je suis désolé(e) (zhuh swee day-zoh-lay)",
+    "answers": ["It’s not a big deal/No problem", "I am sorry (for a mistake/bad news)", "Bless you! (informal)", "Excuse me (to get attention)"],
+    "correctIndex": 1
+  },
+  {
+    "question": "Ce n’est pas grave (suh nay pah grahv)",
+    "answers": ["Pardon me/Sorry (for bumping into someone)", "It’s not a big deal/No problem", "Gladly/Willingly", "Bless you! (informal)"],
+    "correctIndex": 1
+  },
+  {
+    "question": "Il n’y a pas de quoi (eel nyah pah duh kwah)",
+    "answers": ["I am sorry (for a mistake/bad news)", "Pardon me/Sorry (for bumping into someone)", "Don’t mention it/It’s nothing", "With pleasure"],
     "correctIndex": 2
   }
 ]
+

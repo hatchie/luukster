@@ -11,10 +11,22 @@ let currentCorrect = 0;
 let questionPool = [];
 
 export function loadQuestions(data) {
+  // ✅ Support both formats:
+  // 1) { questions: [...] }
+  // 2) [ ... ]
+  const rawQuestions = Array.isArray(data)
+    ? data
+    : data.questions;
+
+  if (!rawQuestions) {
+    console.error("No questions found in quiz data", data);
+    return;
+  }
+
   const seen = new Set();
   const unique = [];
 
-  data.questions.forEach(q => {
+  rawQuestions.forEach(q => {
     const key = q.question.trim().toLowerCase();
     if (!seen.has(key)) {
       seen.add(key);
@@ -22,12 +34,12 @@ export function loadQuestions(data) {
     }
   });
 
-  questions = unique.map(q => buildQuestion(q, data.wrongAnswers));
+  questions = unique.map(q =>
+    buildQuestion(q, data.wrongAnswers || [])
+  );
 
   console.log(`Loaded ${questions.length} unique questions`);
 }
-
-
 
 export function startGame(count) {
   if (!questions.length) {
@@ -56,10 +68,10 @@ function shuffle(array) {
   return array;
 }
 
-function buildQuestion(raw, wrongPool) {
-  const wrongs = shuffle(
-    wrongPool.filter(a => a !== raw.correct)
-  ).slice(0, 3);
+function buildQuestion(raw, wrongPool = []) {
+  const filteredWrong = wrongPool.filter(a => a !== raw.correct);
+
+  const wrongs = shuffle(filteredWrong).slice(0, 3);
 
   const answers = shuffle([
     raw.correct,
@@ -141,5 +153,6 @@ function endGame() {
   show("result");
   setText("finalScore", `You scored ${score} out of ${total}`);
 }
+
 
 

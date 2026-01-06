@@ -26,7 +26,7 @@
   },
   {
     "question": "Comment? (kom-mohn)",
-    "answers": ["What?", "Who?", "How", "Why?"],
+    "answers": ["What?", "Who?", "How?", "Why?"],
     "correctIndex": 2
   },
   {
@@ -80,3 +80,4 @@
     "correctIndex": 2
   }
 ]
+

@@ -51,7 +51,7 @@ function nextQuestion() {
     falling.push(createAnswer(text, i, handleAnswer));
   });
 
-  const speed = 0.6 + current * 0.05;
+  const speed = 0.35 + current * 0.02;
 
   interval = setInterval(() => {
     falling.forEach(a => {
@@ -65,7 +65,7 @@ function nextQuestion() {
         }, 700);
       }
     });
-  }, 16);
+  }, 20);
 }
 
 function handleAnswer(index, element) {
@@ -92,3 +92,4 @@ function endGame() {
   show("result");
   setText("finalScore", `You scored ${score} out of ${total}`);
 }
+

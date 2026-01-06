@@ -11,32 +11,20 @@ let currentCorrect = 0;
 let questionPool = [];
 
 export function loadQuestions(data) {
-  // ✅ Support both formats:
-  // 1) { questions: [...] }
-  // 2) [ ... ]
-  const rawQuestions = Array.isArray(data)
-    ? data
-    : data.questions;
-
-  if (!rawQuestions) {
-    console.error("No questions found in quiz data", data);
+  if (!Array.isArray(data)) {
+    console.error("Quiz data is not an array", data);
     return;
   }
 
   const seen = new Set();
-  const unique = [];
 
-  rawQuestions.forEach(q => {
+  questions = data.filter(q => {
     const key = q.question.trim().toLowerCase();
-    if (!seen.has(key)) {
-      seen.add(key);
-      unique.push(q);
-    }
-  });
 
-  questions = unique.map(q =>
-    buildQuestion(q, data.wrongAnswers || [])
-  );
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 
   console.log(`Loaded ${questions.length} unique questions`);
 }
@@ -66,23 +54,6 @@ function shuffle(array) {
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
-}
-
-function buildQuestion(raw, wrongPool = []) {
-  const filteredWrong = wrongPool.filter(a => a !== raw.correct);
-
-  const wrongs = shuffle(filteredWrong).slice(0, 3);
-
-  const answers = shuffle([
-    raw.correct,
-    ...wrongs
-  ]);
-
-  return {
-    question: raw.question,
-    answers,
-    correctIndex: answers.indexOf(raw.correct)
-  };
 }
 
 export function handleKeyboardAnswer(index) {
@@ -153,6 +124,7 @@ function endGame() {
   show("result");
   setText("finalScore", `You scored ${score} out of ${total}`);
 }
+
 
 
 

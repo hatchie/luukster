@@ -31,12 +31,13 @@ fetch("./data/quizzes.json")
     });
   });
 
-document.getElementById("btn5").onclick = () => {
-  if (selectedQuizFile) startGame(5);
-};
+//document.getElementById("btn5").onclick = () => {
+  //if (selectedQuizFile) startGame(5);
+//};
 
 document.getElementById("btn10").onclick = () => {
   if (selectedQuizFile) startGame(10);
 };
 
 setupKeyboard(handleKeyboardAnswer);
+

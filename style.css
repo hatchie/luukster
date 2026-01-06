@@ -6,7 +6,7 @@
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background: #0f172a;
+  background: #020617;
   color: #f8fafc;
   text-align: center;
 }
@@ -116,4 +116,5 @@ button:hover {
     font-size: 16px;
   }
 }
+
 

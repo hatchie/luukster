@@ -1,27 +1,73 @@
 [
   {
-    "question": "What is 7 × 8?",
-    "answers": ["54", "56", "64", "48"],
+    "question": "Bonne journée (bun zhoor-nay)",
+    "answers": ["Goodbye", "Have a good day", "Welcome", "Good evening"],
     "correctIndex": 1
   },
   {
-    "question": "Which planet is known as the Red Planet?",
-    "answers": ["Earth", "Mars", "Venus", "Jupiter"],
+    "question": "À bientôt (ah bee-ahn-toh)",
+    "answers": ["Good night", "See you soon", "And you?", "Until next time"],
     "correctIndex": 1
   },
   {
-    "question": "What does HTML stand for?",
+    "question": "À tout à l’heure (ah too tah luhr)",
     "answers": [
-      "Hyper Text Markup Language",
-      "High Tech Modern Language",
-      "Hyper Tool Multi Language",
-      "Home Tool Markup Language"
+      "See you in a bit (if meeting later the same day)",
+      "Hi/Bye (casual)",
+      "I’m doing well, thank you.",
+      "Delighted to meet you"
     ],
     "correctIndex": 0
   },
   {
-    "question": "What is the square root of 81?",
-    "answers": ["7", "8", "9", "10"],
+    "question": "Au revoir (oh ruh-vwahr)",
+    "answers": ["Hello/Good day", " See you tomorrow", "Goodbye", "How are you?"],
     "correctIndex": 2
-  }
+  },
+  {
+    "question": "Ça va bien, merci (sah vah bee-ahn, mehr-see)",
+    "answers": ["Have a good day", " See you tomorrow", "I’m doing well, thank you", "How are you?"],
+    "correctIndex": 2
+  },
+  {
+    "question": "À demain (ah duh-mahn)",
+    "answers": ["Until next time", "Have a good evening", "See you tomorrow", "Not bad"],
+    "correctIndex": 2
+  },
+  {
+    "question": "Bienvenue (bee-ahn-vuh-noo)",
+    "answers": ["I’m doing well, thank you", "Welcome (as in, welcome to this place)", "See you in a bit (if meeting later the same day)", "See you soon"],
+    "correctIndex": 1
+  },
+  {
+    "question": "À la prochaine (ah lah pro-shen)",
+    "answers": ["Delighted to meet you", "Until next time", "Not bad", "See you soon"],
+    "correctIndex": 1
+  },
+  {
+    "question": "Enchanté(e) (ohn-shahn-tay)",
+    "answers": ["Hello/Good day", "See you tomorrow", "Delighted to meet you", "No worries"],
+    "correctIndex": 2
+  },
+  {
+    "question": "Pas mal (pah mahl)",
+    "answers": ["I don’t know", " See you tomorrow", "Not bad", "No problem"],
+    "correctIndex": 2
+  },
+  {
+    "question": "Comment allez-vous? (kom-mohn-tah-lay-voo)",
+    "answers": ["How much?/How many?", "Can you help me?", "How are you? (formal/plural)", "What is it?"],
+    "correctIndex": 2
+  },
+  {
+    "question": "À plus tard (ah ploo tahr)",
+    "answers": ["I’m doing well, thank you", "See you later", "Delighted to meet you", "Good evening"],
+    "correctIndex": 1
+  },
+  {
+    "question": "Bonne soirée (bun swah-ray)",
+    "answers": ["Have a good evening", "Until next time", "Hello/Good day", "See you soon"],
+    "correctIndex": 0
+  } 
 ]
+

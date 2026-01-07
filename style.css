@@ -36,6 +36,17 @@ button:hover {
   opacity: 0.9;
 }
 
+#gameTypeMenu button {
+  display: block;
+  margin: 10px auto;
+  padding: 12px 20px;
+  font-size: 16px;
+}
+
+#quizMenu {
+  margin-top: 20px;
+}
+
 /* ---------- Question ---------- */
 #question {
   font-size: 24px;
@@ -116,6 +127,7 @@ button:hover {
     font-size: 16px;
   }
 }
+
 
 
 

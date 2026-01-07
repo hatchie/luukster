@@ -26,30 +26,25 @@
      MAIN MENU (QUIZ SELECT)
      ========================= -->
 <div id="menu">
-  <!-- Game title -->
-  <h1>🧠 Falling Quiz</h1>
+  <h1>🧠 Learning Games</h1>
 
-  <!-- Short instruction text -->
-  <p>Select a quiz</p>
+  <!-- GAME TYPE SELECTION -->
+  <div id="gameTypeMenu">
+    <p>Select a game type</p>
 
-  <!--
-    Quiz buttons (Geography, Science, etc.)
-    These buttons are created dynamically by main.js
-  -->
-  <div id="quizList"></div>
-  
-  <!--
-    Optional button for shorter game.
-    Currently disabled (commented out).
-  -->
-  <!-- <button id="btn5">5 Questions</button> -->
+    <button data-type="quiz">🧠 Quiz</button>
+    <button disabled>🃏 Flashcards (coming soon)</button>
+    <button disabled>🔗 Match Pairs (coming soon)</button>
+  </div>
 
-  <!--
-    Starts the game with 10 questions.
-    Logic is handled in main.js → startGame(10)
-  -->
-  <button id="btn10">Start 10 Questions</button>
+  <!-- QUIZ SELECTION (hidden until Quiz is chosen) -->
+  <div id="quizMenu" hidden>
+    <p>Select a quiz</p>
+    <div id="quizList"></div>
+    <button id="btn10">Start 10 Questions</button>
+  </div>
 </div>
+
 
 <!-- =========================
      GAME SCREEN
@@ -115,3 +110,4 @@
 
 </body>
 </html>
+

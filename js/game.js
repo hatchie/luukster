@@ -58,3 +58,139 @@ export function startGame(count) {
   total = count;
   current = 0;
   score = 0;
+
+// Switch from menu screen to game screen
+  hide("menu");
+  show("game");
+
+  // Start the first question
+  nextQuestion();
+}
+
+
+// ================================
+// KEYBOARD INPUT HANDLER
+// ================================
+// Called from input.js when user presses A–D or 1–4
+export function handleKeyboardAnswer(index) {
+  // Ignore input if question already answered
+  if (answered) return;
+
+  // Find the answer DOM element that matches the key pressed
+  const el = falling.find(a => Number(a.dataset.index) === index);
+
+  // If found, treat it like a click
+  if (el) handleAnswer(index, el);
+}
+
+
+// ================================
+// LOAD NEXT QUESTION
+// ================================
+function nextQuestion() {
+
+  // Stop any previous falling animation
+  clearInterval(interval);
+
+  // Reset state for new question
+  answered = false;
+  falling = [];
+   // Remove old answer elements from the DOM
+  clearAnswers();
+
+  // End game if we reached the question limit
+  if (current >= total) {
+    endGame();
+    return;
+  }
+
+  // Pick a RANDOM question from the loaded quiz
+  const q = questions[Math.floor(Math.random() * questions.length)];
+
+  // Store the correct answer index
+  currentCorrect = q.correctIndex;
+
+  // Update UI text
+  setText("question", q.question);
+  setText("score", `Score: ${score}`);
+
+  // Create falling answer elements
+  // Each answer gets:
+  // - text
+  // - index (0–3)
+// - click handler (handleAnswer)
+  q.answers.forEach((text, i) => {
+    falling.push(createAnswer(text, i, handleAnswer));
+  });
+
+  // Increase falling speed as game progresses
+  const speed = 0.6 + current * 0.05;
+
+  // Move answers downward ~60 times per second
+  interval = setInterval(() => {
+
+    falling.forEach(a => {
+
+      // Move answer down by speed
+      a.style.top = a.offsetTop + speed + "px";
+
+      // Check if answer hits the floor
+      if (a.offsetTop + a.offsetHeight >= gameArea.offsetHeight - 8) {
+
+        // Stop falling
+        clearInterval(interval);
+        // Automatically go to next question
+        setTimeout(() => {
+          current++;
+          nextQuestion();
+        }, 700);
+      }
+    });
+
+  }, 16); // ~60 FPS
+}
+
+
+// ================================
+// HANDLE ANSWER SELECTION
+// ================================
+// index   → selected answer index (0–3)
+// element → clicked DOM element
+function handleAnswer(index, element) {
+  // Prevent multiple selections
+  if (answered) return;
+  answered = true;
+
+  // Stop falling animation
+  clearInterval(interval);
+
+  // Check correctness
+  if (index === currentCorrect) {
+    score++;
+    element.classList.add("correct");
+  } else {
+    element.classList.add("wrong");
+  }
+
+  // Short delay before next question
+  setTimeout(() => {
+    current++;
+    nextQuestion();
+  }, 700);
+  }
+
+
+// ================================
+// END GAME
+// ================================
+function endGame() {
+
+  // Hide game screen
+  hide("game");
+
+  // Show result screen
+  show("result");
+
+  // Display final score
+  setText("finalScore", `You scored ${score} out of ${total}`);
+}

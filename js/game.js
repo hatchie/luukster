@@ -80,6 +80,30 @@ function shuffle(array) {
   return array;
 }
 
+function shuffleAnswers(question) {
+  // Combine answers with their original index
+  const combined = question.answers.map((text, index) => ({
+    text,
+    originalIndex: index
+  }));
+
+  // Shuffle the combined array
+  for (let i = combined.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [combined[i], combined[j]] = [combined[j], combined[i]];
+  }
+
+  // Find where the correct answer ended up
+  const newCorrectIndex = combined.findIndex(
+    a => a.originalIndex === question.correctIndex
+  );
+
+  return {
+    answers: combined.map(a => a.text),
+    correctIndex: newCorrectIndex
+  };
+}
+
 // ================================
 // KEYBOARD INPUT HANDLER
 // ================================
@@ -119,8 +143,9 @@ function nextQuestion() {
   // Pick a question from the loaded quiz
   const q = questionPool[current];
 
-  // Store the correct answer index
-  currentCorrect = q.correctIndex;
+  // Shuffle answers but keep correctness intact
+  const shuffled = shuffleAnswers(q);
+  currentCorrect = shuffled.correctIndex;
 
   // Update UI text
   setText("question", q.question);
@@ -130,8 +155,8 @@ function nextQuestion() {
   // Each answer gets:
   // - text
   // - index (0–3)
-// - click handler (handleAnswer)
-  q.answers.forEach((text, i) => {
+  // - click handler (handleAnswer)
+  shuffled.answers.forEach((text, i) => {
     falling.push(createAnswer(text, i, handleAnswer));
   });
 
@@ -206,4 +231,5 @@ function endGame() {
   // Display final score
   setText("finalScore", `You scored ${score} out of ${total}`);
 }
+
 

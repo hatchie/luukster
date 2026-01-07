@@ -11,10 +11,25 @@ import { setupKeyboard } from "./input.js";
 // setText → helper to change text content of elements (not used here yet)
 import { setText } from "./ui.js";
 
+//Stores which game category is selected
+let selectedGameType = null;
 
 // Stores which quiz the player has selected
 // If this is null, no quiz is selected yet
 let selectedQuizFile = null;
+
+// Handle game type selection
+document.querySelectorAll("#gameTypeMenu button[data-type]").forEach(btn => {
+  btn.onclick = () => {
+    selectedGameType = btn.dataset.type;
+
+    // Only quiz is implemented for now
+    if (selectedGameType === "quiz") {
+      document.getElementById("gameTypeMenu").hidden = true;
+      document.getElementById("quizMenu").hidden = false;
+    }
+  };
+});
 
 
 // ================================
@@ -91,3 +106,4 @@ document.getElementById("btn10").onclick = () => {
 // KEYBOARD INPUT SETUP
 // ===========================
 setupKeyboard(handleKeyboardAnswer);
+

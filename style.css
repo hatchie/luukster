@@ -32,6 +32,11 @@ button {
   color: black;
 }
 
+#quizBack {
+  margin: 10px;
+  font-size: 14px;
+}
+
 button:hover {
   opacity: 0.9;
 }
@@ -174,6 +179,7 @@ button:hover {
     font-size: 16px;
   }
 }
+
 
 
 

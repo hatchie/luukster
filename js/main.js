@@ -3,7 +3,7 @@
 // loadQuestions → loads and prepares quiz questions
 // startGame     → starts the game loop with X questions
 // handleKeyboardAnswer → processes keyboard input (A–D / 1–4)
-import { loadQuestions, startGame, handleKeyboardAnswer } from "./game.js";
+import { loadQuestions, startGame, handleKeyboardAnswer, stopGame } from "./game.js";
 
 // setupKeyboard → listens for keyboard presses and maps them to answers
 import { setupKeyboard } from "./input.js";
@@ -16,9 +16,6 @@ import * as Flashcards from "./games/flashcards.js";
 
 //Enable Match Pairs, import match pairs
 import * as Pairs from "./games/pairs.js";
-
-//import stop quiz loop
-import { loadQuestions, startGame, handleKeyboardAnswer, stopGame } from "./game.js";
 
 //Stores which game category is selected
 let selectedGameType = null;
@@ -146,6 +143,7 @@ document.getElementById("quizBack").onclick = () => {
 // KEYBOARD INPUT SETUP
 // ===========================
 setupKeyboard(handleKeyboardAnswer);
+
 
 
 

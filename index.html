@@ -1,42 +1,117 @@
 <!DOCTYPE html>
+<!--
+  Tells the browser this is an HTML5 document.
+-->
 <html lang="en">
 <head>
+  <!-- Character encoding so text displays correctly -->
   <meta charset="UTF-8" />
+
+  <!--
+    Makes the page responsive on mobile devices.
+    Without this, everything looks zoomed out on phones.
+  -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- Title shown in the browser tab -->
   <title>Falling Quiz</title>
+
+  <!-- Main stylesheet for layout, colors, and animations -->
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
+<!-- =========================
+     MAIN MENU (QUIZ SELECT)
+     ========================= -->
 <div id="menu">
+  <!-- Game title -->
   <h1>🧠 Falling Quiz</h1>
+
+  <!-- Short instruction text -->
   <p>Select a quiz</p>
+
+  <!--
+    Quiz buttons (Geography, Science, etc.)
+    These buttons are created dynamically by main.js
+  -->
   <div id="quizList"></div>
   
-  <!--<button id="btn5">5 Questions</button>-->
+  <!--
+    Optional button for shorter game.
+    Currently disabled (commented out).
+  -->
+  <!-- <button id="btn5">5 Questions</button> -->
+
+  <!--
+    Starts the game with 10 questions.
+    Logic is handled in main.js → startGame(10)
+  -->
   <button id="btn10">Start 10 Questions</button>
 </div>
 
+<!-- =========================
+     GAME SCREEN
+     ========================= -->
 <div id="game" hidden>
+  <!--
+    The current question text.
+    Updated dynamically for each round.
+  -->
   <div id="question"></div>
+
+  <!-- Instructions for controls -->
   <p style="font-size:14px;opacity:0.8">
     Click / Tap or press A–D or 1–4
   </p>
+
+  <!--
+    Game area where answers fall down.
+    Answers are created and animated in game.js
+  -->
   <div id="gameArea">
+
+    <!--
+      Visual floor.
+      If an answer touches this, the question is missed.
+    -->
     <div id="floor"></div>
   </div>
+
+  <!--
+    Score display (e.g. "Score: 3")
+    Updated after every question.
+  -->
   <div id="score"></div>
 </div>
 
+<!-- =========================
+     RESULT SCREEN
+     ========================= -->
 <div id="result" hidden>
+  <!-- Shown when the game ends -->
   <h2>Game Over</h2>
+
+  <!-- Final score text -->
   <p id="finalScore"></p>
+
+  <!-- Reloads the page to start again -->
   <button onclick="location.reload()">Play Again</button>
 </div>
 
+<!-- =========================
+     MAIN JAVASCRIPT ENTRY
+     ========================= -->
+
+<!--
+  Loads the main JavaScript file as an ES module.
+  This file wires together:
+  - quiz selection
+  - game start
+  - keyboard input
+-->
 <script type="module" src="js/main.js"></script>
+
 </body>
 </html>
-
-
-

@@ -27,6 +27,8 @@ export function start(mode) {
   if (mode === "open") {
     revealAll(true);
   }
+  div.dataset.text = card.text;
+
 }
 
 function revealAll(permanent = false) {

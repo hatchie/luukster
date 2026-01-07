@@ -1,99 +1,60 @@
+// Import UI helper functions
+// These ONLY deal with DOM updates and visuals
 import { clearAnswers, createAnswer, setText, show, hide } from "./ui.js";
 
+
+// ================================
+// GAME STATE VARIABLES
+// ================================
+
+// All loaded questions from the selected quiz JSON file
 let questions = [];
+
+// Current question number (0-based index)
 let current = 0;
+
+// Total number of questions to play (e.g. 10)
 let total = 0;
+
+// Player score
 let score = 0;
+
+// Array holding the currently falling answer elements (DOM nodes)
 let falling = [];
+
+// Reference to the setInterval that moves answers downward
 let interval = null;
+
+// Prevents answering the same question multiple times
 let answered = false;
+
+// Index of the correct answer for the current question
 let currentCorrect = 0;
 
+
+// ================================
+// LOAD QUESTIONS
+// ================================
+// Called from main.js after fetching a quiz JSON file
+// Stores all questions in memory
 export function loadQuestions(data) {
   questions = data;
 }
 
+
+// ================================
+// START THE GAME
+// ================================
+// count = number of questions to play (e.g. 10)
 export function startGame(count) {
+
+  // Safety check: no quiz selected
   if (!questions.length) {
     alert("Please select a quiz first!");
     return;
   }
 
+  // Initialize game state
   total = count;
   current = 0;
   score = 0;
-
-  hide("menu");
-  show("game");
-
-  nextQuestion();
-}
-
-export function handleKeyboardAnswer(index) {
-  if (answered) return;
-  const el = falling.find(a => Number(a.dataset.index) === index);
-  if (el) handleAnswer(index, el);
-}
-
-function nextQuestion() {
-  clearInterval(interval);
-  answered = false;
-  falling = [];
-  clearAnswers();
-
-  if (current >= total) {
-    endGame();
-    return;
-  }
-
-  const q = questions[Math.floor(Math.random() * questions.length)];
-  currentCorrect = q.correctIndex;
-
-  setText("question", q.question);
-  setText("score", `Score: ${score}`);
-
-  q.answers.forEach((text, i) => {
-    falling.push(createAnswer(text, i, handleAnswer));
-  });
-
-  const speed = 0.6 + current * 0.05;
-
-  interval = setInterval(() => {
-    falling.forEach(a => {
-      a.style.top = a.offsetTop + speed + "px";
-
-      if (a.offsetTop + a.offsetHeight >= gameArea.offsetHeight - 8) {
-        clearInterval(interval);
-        setTimeout(() => {
-          current++;
-          nextQuestion();
-        }, 700);
-      }
-    });
-  }, 16);
-}
-
-function handleAnswer(index, element) {
-  if (answered) return;
-  answered = true;
-
-  clearInterval(interval);
-
-  if (index === currentCorrect) {
-    score++;
-    element.classList.add("correct");
-  } else {
-    element.classList.add("wrong");
-  }
-
-  setTimeout(() => {
-    current++;
-    nextQuestion();
-  }, 700);
-}
-
-function endGame() {
-  hide("game");
-  show("result");
-  setText("finalScore", `You scored ${score} out of ${total}`);
-}

@@ -12,22 +12,40 @@ export function loadData(data) {
   shuffle(cards);
 }
 
-export function start() {
+export function start(mode) {
+  currentMode = mode;
   document.getElementById("menu").hidden = true;
   document.getElementById("pairs").hidden = false;
 
-  const grid = document.getElementById("pairsGrid");
-  grid.innerHTML = "";
+  renderGrid();
 
-  cards.forEach(card => {
-    const div = document.createElement("div");
-    div.className = "pair-card";
-    div.innerText = "?";
+  if (mode === "preview") {
+    revealAll();
+    setTimeout(hideAll, 10000);
+  }
 
-    div.onclick = () => flipCard(div, card);
-    grid.appendChild(div);
+  if (mode === "open") {
+    revealAll(true);
+  }
+}
+
+function revealAll(permanent = false) {
+  document.querySelectorAll(".pair-card").forEach(card => {
+    card.innerText = card.dataset.text;
+    card.classList.add("revealed");
+    if (permanent) card.classList.add("matched");
   });
 }
+
+function hideAll() {
+  document.querySelectorAll(".pair-card").forEach(card => {
+    if (!card.classList.contains("matched")) {
+      card.innerText = "?";
+      card.classList.remove("revealed");
+    }
+  });
+}
+
 
 function flipCard(el, card) {
   if (lock || el.classList.contains("matched") || flipped.includes(el)) return;

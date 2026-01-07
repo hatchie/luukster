@@ -14,6 +14,8 @@ import { setText } from "./ui.js";
 //Enable Flashcards button, import flashcards
 import * as Flashcards from "./games/flashcards.js";
 
+//Enable Match Pairs, import match pairs
+import * as Pairs from "./games/pairs.js";
 
 //Stores which game category is selected
 let selectedGameType = null;
@@ -41,6 +43,15 @@ if (selectedGameType === "flashcards") {
     });
  }
 
+if (selectedGameType === "pairs") {
+  fetch("./data/pairs/animals.json")
+    .then(res => res.json())
+    .then(data => {
+      Pairs.loadData(data);
+      Pairs.start();
+    });
+}
+    
   };
 });
 
@@ -119,5 +130,6 @@ document.getElementById("btn10").onclick = () => {
 // KEYBOARD INPUT SETUP
 // ===========================
 setupKeyboard(handleKeyboardAnswer);
+
 
 

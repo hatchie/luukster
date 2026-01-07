@@ -17,6 +17,11 @@ import * as Flashcards from "./games/flashcards.js";
 //Enable Match Pairs, import match pairs
 import * as Pairs from "./games/pairs.js";
 
+//Add different match pair game modes and topics
+let selectedPairsMode = null;
+let selectedPairsTopic = null;
+
+
 //Stores which game category is selected
 let selectedGameType = null;
 
@@ -44,13 +49,10 @@ if (selectedGameType === "flashcards") {
  }
 
 if (selectedGameType === "pairs") {
-  fetch("./data/pairs/animals.json")
-    .then(res => res.json())
-    .then(data => {
-      Pairs.loadData(data);
-      Pairs.start();
-    });
+  document.getElementById("gameTypeMenu").hidden = true;
+  document.getElementById("pairsModeMenu").hidden = false;
 }
+
     
   };
 });
@@ -103,19 +105,6 @@ fetch("./data/quizzes.json")
     });
   });
 
-
-// ================================
-// START GAME BUTTONS
-// ================================
-
-// Optional 5-question mode (currently disabled)
-// Uncomment if you want to use it later
-
-// document.getElementById("btn5").onclick = () => {
-//   if (selectedQuizFile) startGame(5);
-// };
-
-
 // Start game with 10 questions
 document.getElementById("btn10").onclick = () => {
 
@@ -138,11 +127,23 @@ document.getElementById("quizBack").onclick = () => {
     .forEach(b => b.style.opacity = 1);
 };
 
+document.querySelectorAll("#pairsModeMenu button[data-mode]").forEach(btn => {
+  btn.onclick = () => {
+    selectedPairsMode = btn.dataset.mode;
+
+    document.getElementById("pairsModeMenu").hidden = true;
+    document.getElementById("pairsTopicMenu").hidden = false;
+
+    loadPairsTopics();
+  };
+});
+
 
 // ================================
 // KEYBOARD INPUT SETUP
 // ===========================
 setupKeyboard(handleKeyboardAnswer);
+
 
 
 

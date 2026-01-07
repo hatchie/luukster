@@ -90,3 +90,5 @@ document.getElementById("btn10").onclick = () => {
 // ================================
 // KEYBOARD INPUT SETUP
 // ===========================
+setupKeyboard(handleKeyboardAnswer);
+

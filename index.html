@@ -55,11 +55,30 @@
   <button id="backToMenu">Back</button>
 </div>
 
+<!-- MATCH PAIRS MODE SELECTION -->
+<div id="pairsModeMenu" hidden>
+  <h2>Match Pairs</h2>
+  <p>Select game mode</p>
+
+  <button data-mode="blind">🙈 Blind</button>
+  <button data-mode="preview">👀 Preview (10s)</button>
+  <button data-mode="open">📖 Always Open</button>
+
+  <button id="pairsModeBack">← Back</button>
+</div>
+
+<!-- MATCH PAIRS TOPIC SELECTION -->
+<div id="pairsTopicMenu" hidden>
+  <p>Select topic</p>
+  <div id="pairsTopicList"></div>
+  <button id="pairsTopicBack">← Back</button>
+</div>
+
 <!-- MATCH PAIRS GAME -->
 <div id="pairs" hidden>
   <h2>Match the Pairs</h2>
   <div id="pairsGrid"></div>
-  <button id="pairsBack">Back</button>
+  <button id="pairsBack">← Back to Games</button>
 </div>
 
 <!-- =========================
@@ -129,6 +148,7 @@
 
 </body>
 </html>
+
 
 
 

@@ -72,6 +72,11 @@ export function startGame(count) {
   nextQuestion();
 }
 
+export function stopGame() {
+  clearInterval(interval);
+}
+
+
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -231,5 +236,6 @@ function endGame() {
   // Display final score
   setText("finalScore", `You scored ${score} out of ${total}`);
 }
+
 
 

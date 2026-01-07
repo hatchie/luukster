@@ -10,6 +10,9 @@ import { clearAnswers, createAnswer, setText, show, hide } from "./ui.js";
 // All loaded questions from the selected quiz JSON file
 let questions = [];
 
+//Prevent the same question appearing twice in one game
+let questionPool = [];
+
 // Current question number (0-based index)
 let current = 0;
 
@@ -63,10 +66,19 @@ export function startGame(count) {
   hide("menu");
   show("game");
 
+  // Create a shuffled copy so no question repeats
+  questionPool = shuffle([...questions]);
   // Start the first question
   nextQuestion();
 }
 
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
 // ================================
 // KEYBOARD INPUT HANDLER
@@ -104,8 +116,8 @@ function nextQuestion() {
     return;
   }
 
-  // Pick a RANDOM question from the loaded quiz
-  const q = questions[Math.floor(Math.random() * questions.length)];
+  // Pick a question from the loaded quiz
+  const q = questionPool[current];
 
   // Store the correct answer index
   currentCorrect = q.correctIndex;
@@ -194,3 +206,4 @@ function endGame() {
   // Display final score
   setText("finalScore", `You scored ${score} out of ${total}`);
 }
+

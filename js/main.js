@@ -11,6 +11,10 @@ import { setupKeyboard } from "./input.js";
 // setText → helper to change text content of elements (not used here yet)
 import { setText } from "./ui.js";
 
+//Enable Flashcards button, import flashcards
+import * as Flashcards from "./games/flashcards.js";
+
+
 //Stores which game category is selected
 let selectedGameType = null;
 
@@ -23,11 +27,20 @@ document.querySelectorAll("#gameTypeMenu button[data-type]").forEach(btn => {
   btn.onclick = () => {
     selectedGameType = btn.dataset.type;
 
-    // Only quiz is implemented for now
-    if (selectedGameType === "quiz") {
-      document.getElementById("gameTypeMenu").hidden = true;
-      document.getElementById("quizMenu").hidden = false;
-    }
+if (selectedGameType === "quiz") {
+  document.getElementById("gameTypeMenu").hidden = true;
+  document.getElementById("quizMenu").hidden = false;
+}
+
+if (selectedGameType === "flashcards") {
+  fetch("./data/flashcards/french.json")
+    .then(res => res.json())
+    .then(data => {
+      Flashcards.loadData(data);
+      Flashcards.start();
+    });
+ }
+
   };
 });
 
@@ -106,4 +119,5 @@ document.getElementById("btn10").onclick = () => {
 // KEYBOARD INPUT SETUP
 // ===========================
 setupKeyboard(handleKeyboardAnswer);
+
 

@@ -125,11 +125,26 @@ document.getElementById("btn10").onclick = () => {
   }
 };
 
+document.getElementById("quizBack").onclick = () => {
+  // Hide quiz UI
+  document.getElementById("game").hidden = true;
+  document.getElementById("result").hidden = true;
+
+  // Reset menus
+  document.getElementById("quizMenu").hidden = true;
+  document.getElementById("gameTypeMenu").hidden = false;
+
+  // Optional: reset quiz selection visuals
+  document.querySelectorAll("#quizList button")
+    .forEach(b => b.style.opacity = 1);
+};
+
 
 // ================================
 // KEYBOARD INPUT SETUP
 // ===========================
 setupKeyboard(handleKeyboardAnswer);
+
 
 
 

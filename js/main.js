@@ -17,6 +17,9 @@ import * as Flashcards from "./games/flashcards.js";
 //Enable Match Pairs, import match pairs
 import * as Pairs from "./games/pairs.js";
 
+//import stop quiz loop
+import { loadQuestions, startGame, handleKeyboardAnswer, stopGame } from "./game.js";
+
 //Stores which game category is selected
 let selectedGameType = null;
 
@@ -126,15 +129,14 @@ document.getElementById("btn10").onclick = () => {
 };
 
 document.getElementById("quizBack").onclick = () => {
+  stopGame();
   // Hide quiz UI
   document.getElementById("game").hidden = true;
   document.getElementById("result").hidden = true;
-
   // Reset menus
   document.getElementById("quizMenu").hidden = true;
   document.getElementById("gameTypeMenu").hidden = false;
-
-  // Optional: reset quiz selection visuals
+   // Optional: reset quiz selection visuals
   document.querySelectorAll("#quizList button")
     .forEach(b => b.style.opacity = 1);
 };
@@ -144,6 +146,7 @@ document.getElementById("quizBack").onclick = () => {
 // KEYBOARD INPUT SETUP
 // ===========================
 setupKeyboard(handleKeyboardAnswer);
+
 
 
 

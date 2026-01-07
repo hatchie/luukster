@@ -138,11 +138,44 @@ document.querySelectorAll("#pairsModeMenu button[data-mode]").forEach(btn => {
   };
 });
 
+function loadPairsTopics() {
+  fetch("./data/pairs/topics.json")
+    .then(res => res.json())
+    .then(topics => {
+      const list = document.getElementById("pairsTopicList");
+      list.innerHTML = "";
+
+      topics.forEach(t => {
+        const btn = document.createElement("button");
+        btn.textContent = t.title;
+
+        btn.onclick = () => {
+          selectedPairsTopic = t.file;
+          startPairsGame();
+        };
+
+        list.appendChild(btn);
+      });
+    });
+}
+
+function startPairsGame() {
+  fetch(`./data/pairs/${selectedPairsTopic}`)
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("pairsTopicMenu").hidden = true;
+
+      Pairs.loadData(data);
+      Pairs.start(selectedPairsMode); // 👈 pass mode
+    });
+}
+
 
 // ================================
 // KEYBOARD INPUT SETUP
 // ===========================
 setupKeyboard(handleKeyboardAnswer);
+
 
 
 

@@ -66,6 +66,33 @@ button:hover {
   margin: 10px;
 }
 
+#pairsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  max-width: 400px;
+  margin: 20px auto;
+}
+
+.pair-card {
+  background: #1e1e1e;
+  border-radius: 10px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  user-select: none;
+}
+
+.pair-card.revealed {
+  background: #333;
+}
+
+.pair-card.matched {
+  background: #2e7d32;
+}
 
 /* ---------- Question ---------- */
 #question {
@@ -147,6 +174,7 @@ button:hover {
     font-size: 16px;
   }
 }
+
 
 
 

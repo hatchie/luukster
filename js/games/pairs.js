@@ -1,7 +1,7 @@
 let cards = [];
 let flipped = [];
 let lock = false;
-console.log("Pairs mode:", mode);
+
 export function loadData(data) {
   // Convert pairs into individual cards
   cards = data.flatMap(pair => [

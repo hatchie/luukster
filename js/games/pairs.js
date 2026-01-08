@@ -36,6 +36,9 @@ function renderGrid() {
   const area = document.getElementById("gameArea");
   area.innerHTML = ""; // clear previous cards
 
+  //debug
+  console.log("renderGrid called, cards:", cards);
+  
   cards.forEach(card => {
     const div = document.createElement("div");
     div.className = "pair-card";

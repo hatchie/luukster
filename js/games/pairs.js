@@ -1,4 +1,5 @@
 let cards = [];
+let first = null;
 let flipped = [];
 let lock = false;
 let currentMode = "blind";
@@ -33,6 +34,58 @@ export function start(mode) {
 
 }
 
+function renderGrid() {
+  const area = document.getElementById("gameArea");
+  area.innerHTML = ""; // clear previous cards
+
+  cards.forEach(card => {
+    const div = document.createElement("div");
+    div.className = "pair-card";
+
+    // store card value
+    div.dataset.text = card.text;
+
+    // show or hide based on mode
+    if (currentMode === "open") {
+      div.innerText = card.text;
+      div.classList.add("open");
+    } else {
+      div.innerText = "";
+      div.classList.remove("open");
+    }
+
+    div.onclick = () => flipCard(div);
+    area.appendChild(div);
+  });
+
+  // preview mode: show cards briefly
+  if (currentMode === "preview") {
+    previewCards();
+  }
+}
+
+function previewCards() {
+  const cardsEl = document.querySelectorAll(".pair-card");
+
+  // Show all cards
+  cardsEl.forEach(card => {
+    card.innerText = card.dataset.text;
+    card.classList.add("open");
+  });
+
+  lock = true; // block interaction during preview
+
+  // After 10 seconds, hide cards again
+  setTimeout(() => {
+    cardsEl.forEach(card => {
+      card.innerText = "";
+      card.classList.remove("open");
+    });
+
+    lock = false; // allow play
+  }, 10000); // 10 seconds
+}
+
 function revealAll(permanent = false) {
   document.querySelectorAll(".pair-card").forEach(card => {
     card.innerText = card.dataset.text;
@@ -52,16 +105,24 @@ function hideAll() {
 
 
 function flipCard(el, card) {
-  if (lock || el.classList.contains("matched") || flipped.includes(el)) return;
+  // Block interaction during preview or animation
+  if (lock) return;
 
+  // Prevent re-clicking matched or already flipped cards
+  if (el.classList.contains("matched") || flipped.includes(el)) return;
+
+  // Reveal card
   el.innerText = card.text;
   el.classList.add("revealed");
+
   flipped.push(el);
 
+  // Check match when two cards are flipped
   if (flipped.length === 2) {
     checkMatch();
   }
 }
+
 
 function checkMatch() {
   lock = true;

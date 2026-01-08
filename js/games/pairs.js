@@ -4,7 +4,7 @@
 // - preview : cards open for 10s, then close
 // - open    : cards always visible
 
-import { show, hide } from "./ui.js";
+import { show, hide } from "../ui.js";
 
 /* =========================
    STATE VARIABLES

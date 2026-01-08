@@ -181,6 +181,17 @@ button:hover {
 }
 
 
+.pair-card {
+  width: 80px;
+  height: 80px;
+  background: red;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+}
+
 
 
 

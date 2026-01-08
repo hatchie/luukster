@@ -1,6 +1,6 @@
 [
-  { "a": "Dog", "b": "Chien" },
-  { "a": "Cat", "b": "Chat" },
-  { "a": "Bird", "b": "Oiseau" },
-  { "a": "Horse", "b": "Cheval" }
+  { "Dog": "Chien" },
+  { "Cat": "Chat" },
+  { "Bird": "Oiseau" },
+  { "Horse": "Cheval" }
 ]

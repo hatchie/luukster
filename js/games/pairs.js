@@ -1,6 +1,7 @@
 let cards = [];
 let flipped = [];
 let lock = false;
+let currentMode = "blind";
 
 export function loadData(data) {
   // Convert pairs into individual cards
@@ -13,6 +14,7 @@ export function loadData(data) {
 }
 
 export function start(mode) {
+  console.log("Pairs mode:", mode); // ✅ mode exists HERE
   currentMode = mode;
   document.getElementById("menu").hidden = true;
   document.getElementById("pairs").hidden = false;

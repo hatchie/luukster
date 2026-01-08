@@ -1,147 +1,164 @@
-let cards = [];
-let first = null;
-let flipped = [];
-let lock = false;
+// pairs.js
+// Match Pairs game logic with 3 modes:
+// - blind   : cards start hidden
+// - preview : cards open for 10s, then close
+// - open    : cards always visible
+
+import { show, hide } from "./ui.js";
+
+/* =========================
+   STATE VARIABLES
+========================= */
+
+let pairData = [];     // raw data loaded from JSON
+let cards = [];        // duplicated + shuffled cards
+let flipped = [];      // currently flipped cards
+let lock = false;      // prevents clicking during animations
 let currentMode = "blind";
 
-export function loadData(data) {
-  // Convert pairs into individual cards
-  cards = data.flatMap(pair => [
-    { text: pair.a, key: pair.a + pair.b },
-    { text: pair.b, key: pair.a + pair.b }
-  ]);
+/* =========================
+   DATA LOADING
+========================= */
 
-  shuffle(cards);
+// Called from main.js after fetching JSON
+export function loadPairs(data) {
+  pairData = data;
 }
+
+/* =========================
+   GAME START
+========================= */
 
 export function start(mode) {
-  console.log("start pairs, cards BEFORE:", cards);
-  console.log("Pairs mode:", mode); // ✅ mode exists HERE
+  console.log("Pairs mode:", mode);
+
   currentMode = mode;
-  document.getElementById("menu").hidden = true;
-  document.getElementById("pairs").hidden = false;
+  flipped = [];
+  lock = false;
 
-  if (mode === "preview") {
-    revealAll();
-    setTimeout(hideAll, 10000);
-  }
+  // Create duplicated + shuffled cards
+  cards = shuffle(createPairs());
 
-  if (mode === "open") {
-    revealAll(true);
-  }
+  hide("menu");
+  show("game");
+
   renderGrid();
-  console.log("start pairs, cards AFTER:", cards);
 }
+
+/* =========================
+   CREATE CARD PAIRS
+========================= */
+
+function createPairs() {
+  const result = [];
+
+  pairData.forEach((item, index) => {
+    // each item appears twice
+    result.push({ text: item.text, id: index });
+    result.push({ text: item.text, id: index });
+  });
+
+  return result; // ❗ REQUIRED
+}
+
+/* =========================
+   RENDER GRID
+========================= */
 
 function renderGrid() {
   const area = document.getElementById("gameArea");
-  area.innerHTML = ""; // clear previous cards
+  area.innerHTML = ""; // clear previous game
 
-  //debug
-  console.log("renderGrid called, cards:", cards);
-  
   cards.forEach(card => {
     const div = document.createElement("div");
     div.className = "pair-card";
 
-    // store card value
+    // store value on element
+    div.dataset.id = card.id;
     div.dataset.text = card.text;
 
-    // show or hide based on mode
+    // OPEN MODE → cards always visible
     if (currentMode === "open") {
       div.innerText = card.text;
-      div.classList.add("open");
-    } else {
-      div.innerText = "";
-      div.classList.remove("open");
+      div.classList.add("revealed");
     }
 
-    div.onclick = () => flipCard(div);
+    // click handler
+    div.onclick = () => flipCard(div, card);
+
     area.appendChild(div);
   });
 
-  // preview mode: show cards briefly
+  // PREVIEW MODE → show cards briefly
   if (currentMode === "preview") {
     previewCards();
   }
 }
 
+/* =========================
+   PREVIEW MODE
+========================= */
+
 function previewCards() {
-  const cardsEl = document.querySelectorAll(".pair-card");
+  const allCards = document.querySelectorAll(".pair-card");
 
-  // Show all cards
-  cardsEl.forEach(card => {
-    card.innerText = card.dataset.text;
-    card.classList.add("open");
+  lock = true;
+
+  // show all cards
+  allCards.forEach(c => {
+    c.innerText = c.dataset.text;
+    c.classList.add("revealed");
   });
 
-  lock = true; // block interaction during preview
-
-  // After 10 seconds, hide cards again
+  // hide after 10 seconds
   setTimeout(() => {
-    cardsEl.forEach(card => {
-      card.innerText = "";
-      card.classList.remove("open");
+    allCards.forEach(c => {
+      c.innerText = "";
+      c.classList.remove("revealed");
     });
-
-    lock = false; // allow play
-  }, 10000); // 10 seconds
+    lock = false;
+  }, 10000);
 }
 
-function revealAll(permanent = false) {
-  document.querySelectorAll(".pair-card").forEach(card => {
-    card.innerText = card.dataset.text;
-    card.classList.add("revealed");
-    if (permanent) card.classList.add("matched");
-  });
-}
-
-function hideAll() {
-  document.querySelectorAll(".pair-card").forEach(card => {
-    if (!card.classList.contains("matched")) {
-      card.innerText = "?";
-      card.classList.remove("revealed");
-    }
-  });
-}
-
+/* =========================
+   CARD FLIP LOGIC
+========================= */
 
 function flipCard(el, card) {
-  // Block interaction during preview or animation
   if (lock) return;
+  if (el.classList.contains("matched")) return;
+  if (flipped.includes(el)) return;
 
-  // Prevent re-clicking matched or already flipped cards
-  if (el.classList.contains("matched") || flipped.includes(el)) return;
-
-  // Reveal card
   el.innerText = card.text;
   el.classList.add("revealed");
-
   flipped.push(el);
 
-  // Check match when two cards are flipped
   if (flipped.length === 2) {
     checkMatch();
   }
 }
 
+/* =========================
+   MATCH CHECK
+========================= */
 
 function checkMatch() {
   lock = true;
 
   const [a, b] = flipped;
-  const cardA = cards.find(c => c.text === a.innerText);
-  const cardB = cards.find(c => c.text === b.innerText);
 
-  if (cardA.key === cardB.key) {
+  if (a.dataset.id === b.dataset.id) {
+    // MATCH
     a.classList.add("matched");
     b.classList.add("matched");
     flipped = [];
     lock = false;
+    checkWin();
   } else {
+    // NO MATCH
     setTimeout(() => {
-      a.innerText = "?";
-      b.innerText = "?";
+      a.innerText = "";
+      b.innerText = "";
       a.classList.remove("revealed");
       b.classList.remove("revealed");
       flipped = [];
@@ -150,11 +167,25 @@ function checkMatch() {
   }
 }
 
-document.getElementById("pairsBack").onclick = () => location.reload();
+/* =========================
+   WIN CHECK
+========================= */
 
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+function checkWin() {
+  const remaining = document.querySelectorAll(".pair-card:not(.matched)");
+  if (remaining.length === 0) {
+    alert("🎉 You matched all pairs!");
   }
+}
+
+/* =========================
+   SHUFFLE (Fisher–Yates)
+========================= */
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
 }

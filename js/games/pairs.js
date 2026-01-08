@@ -20,8 +20,6 @@ export function start(mode) {
   document.getElementById("menu").hidden = true;
   document.getElementById("pairs").hidden = false;
 
-  renderGrid();
-
   if (mode === "preview") {
     revealAll();
     setTimeout(hideAll, 10000);
@@ -30,7 +28,7 @@ export function start(mode) {
   if (mode === "open") {
     revealAll(true);
   }
-  div.dataset.text = card.text;
+  renderGrid();
 
 }
 

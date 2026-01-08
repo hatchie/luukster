@@ -15,6 +15,7 @@ export function loadData(data) {
 }
 
 export function start(mode) {
+  console.log("start pairs, cards BEFORE:", cards);
   console.log("Pairs mode:", mode); // ✅ mode exists HERE
   currentMode = mode;
   document.getElementById("menu").hidden = true;
@@ -29,7 +30,7 @@ export function start(mode) {
     revealAll(true);
   }
   renderGrid();
-
+  console.log("start pairs, cards AFTER:", cards);
 }
 
 function renderGrid() {
